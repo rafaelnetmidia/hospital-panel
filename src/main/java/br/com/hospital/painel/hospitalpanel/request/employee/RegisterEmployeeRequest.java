@@ -13,6 +13,6 @@ public class RegisterEmployeeRequest {
     private String cpf;
     private String rg;
     private String telephone;
-    private Long idJobType;
+    private Long idPosition;
 
 }

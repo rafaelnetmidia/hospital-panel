@@ -1,7 +1,7 @@
 package br.com.hospital.painel.hospitalpanel.service;
 
 import br.com.hospital.painel.hospitalpanel.Entity.Employee;
-import br.com.hospital.painel.hospitalpanel.Entity.JobType;
+import br.com.hospital.painel.hospitalpanel.Entity.Position;
 import br.com.hospital.painel.hospitalpanel.repository.EmployeeRepository;
 import br.com.hospital.painel.hospitalpanel.request.employee.RegisterEmployeeRequest;
 import lombok.AllArgsConstructor;
@@ -15,8 +15,8 @@ public class EmployeeService {
 
     public Employee registerEmployee(RegisterEmployeeRequest request) {
 
-        JobType jobType = JobType.builder()
-                .idJobType(request.getIdJobType())
+        Position position = Position.builder()
+                .idPosition(request.getIdPosition())
                 .build();
 
         Employee employee = Employee.builder()
@@ -24,7 +24,7 @@ public class EmployeeService {
                 .telephone(request.getTelephone())
                 .rg(request.getRg())
                 .cpf(request.getCpf())
-                .jobType(jobType)
+                .position(position)
                 .build();
 
         return employeeRepository.save(employee);
@@ -40,9 +40,9 @@ public class EmployeeService {
 
         if(employee != null) {
 
-            JobType jobType = JobType
+            Position position = Position
                     .builder()
-                    .idJobType(request.getIdJobType())
+                    .idPosition(request.getIdPosition())
                     .build();
 
             employee.setName(request.getName());
@@ -50,7 +50,7 @@ public class EmployeeService {
             employee.setRg(request.getRg());
             employee.setTelephone(request.getTelephone());
             employee.setIdEmployee(employee.getIdEmployee());
-            employee.setJobType(jobType);
+            employee.setPosition(position);
 
             return employeeRepository.save(employee);
         }

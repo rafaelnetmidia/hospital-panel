@@ -42,8 +42,8 @@ public class EmployeeController {
         response.setCpf(employee.getCpf());
         response.setRg(employee.getRg());
         response.setTelephone(employee.getTelephone());
-        response.setIdPosition(employee.getJobType().getIdJobType());
-        response.setPosition(employee.getJobType().getPosition());
+        response.setIdPosition(employee.getPosition().getIdPosition());
+        response.setPosition(employee.getPosition().getFunction());
 
         return ResponseEntity.ok(response);
     }

@@ -22,8 +22,8 @@ public class Employee {
     private String telephone;
 
     @OneToOne
-    @JoinColumn(name = "job_type_id")
-    private JobType jobType;
+    @JoinColumn(name = "id_position")
+    private Position position;
 
     public Employee() {
     }
