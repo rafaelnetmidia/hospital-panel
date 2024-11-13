@@ -31,13 +31,25 @@ public class PatientController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Patient> findPatient(@PathVariable Long id) {
+
         Patient patient = patientService.findPatient(id);
+
+        if(patient == null) {
+            return ResponseEntity.noContent().build();
+        }
+
         return ResponseEntity.ok(patient);
     }
     
     @PutMapping("/{id}")
     public ResponseEntity<URI> updatePatient(@PathVariable Long id, @RequestBody RegisterPatientRequest request) {
+
         Patient patient = patientService.updatePatient(id, request);
+
+        if (patient == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.ok(URI.create("/patients/" + patient.getIdPatient()));
     }
 

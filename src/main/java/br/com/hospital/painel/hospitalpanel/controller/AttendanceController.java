@@ -35,6 +35,11 @@ public class AttendanceController {
     public ResponseEntity<List<Attendance>> findAllPutStatus(@PathVariable Long status) {
 
         List<Attendance> attendances = attendanceService.findAllPutStatus(status);
+
+        if(attendances.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
         return ResponseEntity.ok(attendances);
     }
 
@@ -42,13 +47,29 @@ public class AttendanceController {
     public ResponseEntity<Attendance> findAttendance(@PathVariable Long idAttendance) {
 
         Attendance attendance = attendanceService.findAttendance(idAttendance);
+
+        if(attendance == null) {
+            return ResponseEntity.noContent().build();
+        }
+
         return ResponseEntity.ok(attendance);
     }
 
     @PutMapping("attendance/{idAttendance}/employee/{idEmployee}")
     public ResponseEntity<URI> updateAttendance(@PathVariable Long idAttendance, @PathVariable Long idEmployee, @RequestBody UpdateAttendanceRequest request) {
         Attendance attendance = attendanceService.updateAttendance(idAttendance, idEmployee, request);
+
+        if (attendance == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.ok(URI.create("/attendances/attendance/" + attendance.getIdAttendance()));
+    }
+
+    @DeleteMapping("attendance/{idAttendance}")
+    public ResponseEntity<Void> deleteAttendance(@PathVariable Long idAttendance) {
+        attendanceService.deleteAttendance(idAttendance);
+        return ResponseEntity.ok().build();
     }
 
 }

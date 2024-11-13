@@ -36,21 +36,22 @@ public class EmployeeController {
 
         Employee employee = employeeService.findEmployee(id);
 
-        FindEmployeeResponse response = new FindEmployeeResponse();
-        response.setIdEmployee(employee.getIdEmployee());
-        response.setName(employee.getName());
-        response.setCpf(employee.getCpf());
-        response.setRg(employee.getRg());
-        response.setTelephone(employee.getTelephone());
-        response.setIdPosition(employee.getPosition().getIdPosition());
-        response.setPosition(employee.getPosition().getFunction());
+        if (employee == null) {
+            return ResponseEntity.noContent().build();
+        }
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(getFindEmployeeResponse(employee));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<URI> updateEmployee(@PathVariable Long id, @RequestBody RegisterEmployeeRequest request) {
+
         Employee employee = employeeService.updateEmployee(id, request);
+
+        if(employee == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         return ResponseEntity.ok(URI.create("/employees/" + employee.getIdEmployee()));
     }
 
@@ -58,6 +59,19 @@ public class EmployeeController {
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.ok().build();
+    }
+
+    private static FindEmployeeResponse getFindEmployeeResponse(Employee employee) {
+
+        return FindEmployeeResponse.builder()
+                .idEmployee(employee.getIdEmployee())
+                .name(employee.getName())
+                .cpf(employee.getCpf())
+                .rg(employee.getRg())
+                .telephone(employee.getTelephone())
+                .idPosition(employee.getPosition().getIdPosition())
+                .position(employee.getPosition().getFunction())
+                .build();
     }
 
 }
