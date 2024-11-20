@@ -26,6 +26,15 @@ public class Attendance {
     private Date dtUpdateAttendance;
     private Date dtEndAttendance;
 
+    @Column(length = 500)
+    private String remarks;
+
+    @Column
+    private String currentLocation;
+
+    @Column
+    private String estimatedCompletionTime;
+
     @ManyToOne
     @JoinColumn(name = "id_patient")
     private Patient patient;

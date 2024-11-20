@@ -4,15 +4,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
-public class RegisterEmployeeRequest {
+public class RegisterEmployeeAndUserRequest {
 
     private String name;
+    private String email;
     private String cpf;
     private String rg;
     private String telephone;
-    private Long idPosition;
+    private String userName;
+    private String password;
+    private List<Long> roles;
 
 }

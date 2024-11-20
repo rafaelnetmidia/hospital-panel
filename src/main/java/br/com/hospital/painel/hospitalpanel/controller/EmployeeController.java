@@ -1,8 +1,7 @@
 package br.com.hospital.painel.hospitalpanel.controller;
 
 import br.com.hospital.painel.hospitalpanel.Entity.Employee;
-import br.com.hospital.painel.hospitalpanel.request.employee.RegisterEmployeeRequest;
-import br.com.hospital.painel.hospitalpanel.response.employee.FindEmployeeResponse;
+import br.com.hospital.painel.hospitalpanel.request.employee.RegisterEmployeeAndUserRequest;
 import br.com.hospital.painel.hospitalpanel.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 @RequestMapping("/employees")
@@ -19,9 +19,9 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerEmployee(@RequestBody RegisterEmployeeRequest request) {
+    public ResponseEntity<String> registerEmployeeAndUser(@RequestBody RegisterEmployeeAndUserRequest request) {
 
-        Employee employee = employeeService.registerEmployee(request);
+        Employee employee = employeeService.registerEmployeeAndUser(request);
 
         if(employee != null) {
             return ResponseEntity.created(URI.create("/employees/" + employee.getIdEmployee())).build();
@@ -31,20 +31,20 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<FindEmployeeResponse> findEmployee(@PathVariable Long id) {
+    @GetMapping
+    public ResponseEntity<List<Employee>> findAllEmployee() {
 
-        Employee employee = employeeService.findEmployee(id);
+        List<Employee> employee = employeeService.findAllEmployee();
 
-        if (employee == null) {
+        if (employee.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(getFindEmployeeResponse(employee));
+        return ResponseEntity.ok(employee);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<URI> updateEmployee(@PathVariable Long id, @RequestBody RegisterEmployeeRequest request) {
+    public ResponseEntity<URI> updateEmployee(@PathVariable Long id, @RequestBody RegisterEmployeeAndUserRequest request) {
 
         Employee employee = employeeService.updateEmployee(id, request);
 
@@ -59,19 +59,6 @@ public class EmployeeController {
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.ok().build();
-    }
-
-    private static FindEmployeeResponse getFindEmployeeResponse(Employee employee) {
-
-        return FindEmployeeResponse.builder()
-                .idEmployee(employee.getIdEmployee())
-                .name(employee.getName())
-                .cpf(employee.getCpf())
-                .rg(employee.getRg())
-                .telephone(employee.getTelephone())
-                .idPosition(employee.getPosition().getIdPosition())
-                .position(employee.getPosition().getFunction())
-                .build();
     }
 
 }
