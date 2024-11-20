@@ -9,7 +9,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     private final String principal;
 
-    public JwtAuthenticationToken(String principal, Object credentials) {
+    public JwtAuthenticationToken(String principal) {
         super(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
         this.principal = principal;
         setAuthenticated(true);
