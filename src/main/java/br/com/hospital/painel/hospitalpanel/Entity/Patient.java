@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "patient")
 @Getter
 @Setter
 @Builder
@@ -19,11 +18,16 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_seq")
     private Long idPatient;
-    @Column(name = "name", length = 50)
+    @Column(length = 50)
     private String name;
+    @Column(nullable = false, unique = true)
+    private String cpf;
+    private String rg;
     private Date dtBirth;
-    @Column(name = "telephone", length = 20)
+    @Column(length = 20)
     private String telephone;
+    @Column(unique = true)
+    private String email;
 
     public Patient() {
 

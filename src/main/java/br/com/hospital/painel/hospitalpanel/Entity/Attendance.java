@@ -36,24 +36,16 @@ public class Attendance {
     private String estimatedCompletionTime;
 
     @ManyToOne
-    @JoinColumn(name = "id_patient")
+    @JoinColumn(name = "id_patient", nullable = false)
     private Patient patient;
 
-
     @ManyToOne
-    @JoinColumn(name = "id_employee")
+    @JoinColumn(name = "id_employee", nullable = false)
     private Employee employee;
 
-
     @ManyToOne
-    @JoinColumn(name = "id_attendance_type")
-    private AttendanceType attendanceType;
-
-
-    @ManyToOne
-    @JoinColumn(name = "id_attendance_situation")
+    @JoinColumn(name = "id_attendance_situation", nullable = false)
     private AttendanceSituation attendanceSituation;
-
 
     public Attendance() {
 

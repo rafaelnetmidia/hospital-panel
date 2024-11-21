@@ -14,15 +14,15 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class AttendanceType {
+public class ExamType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "attendance_type_seq")
-    private Long idAttendanceType;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exam_type_seq")
+    private Long idExamType;
     private String type;
     private Integer status;
 
-    public AttendanceType() {
+    public ExamType() {
 
     }
 }

@@ -17,17 +17,28 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exam_seq")
     private Long idExam;
 
-    private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "id_attendance")
-    private Attendance attendance;
-
     @Column
     private Boolean isCompleted;
 
     @Column
     private String result;
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_attendance", nullable = false)
+    private Attendance attendance;
+
+    @ManyToOne
+    @JoinColumn(name = "id_employee", nullable = false)
+    private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "id_exam_type", nullable = false)
+    private ExamType examType;
+
+    @ManyToOne
+    @JoinColumn(name = "id_exam_situation", nullable = false)
+    private ExamSituation examSituation;
 
     public Exam() {}
 }

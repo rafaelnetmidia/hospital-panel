@@ -20,7 +20,6 @@ public class AttendanceService {
                 .builder()
                 .patient(Patient.builder().idPatient(idPatient).build())
                 .attendanceSituation(AttendanceSituation.builder().idAttendanceSituation(1L).build())
-                .attendanceType(AttendanceType.builder().idAttendanceType(1L).build())
                 .build();
 
         return attendanceRepository.save(attendance);
@@ -39,7 +38,6 @@ public class AttendanceService {
         Attendance attendance = findAttendance(idAttendance);
 
         attendance.setEmployee(Employee.builder().idEmployee(idEmployee).build());
-        attendance.setAttendanceType(AttendanceType.builder().idAttendanceType(request.getIdAttendanceType()).build());
         attendance.setAttendanceSituation(AttendanceSituation.builder().idAttendanceSituation(request.getIdAttendanceSituation()).build());
 
         return attendanceRepository.save(attendance);

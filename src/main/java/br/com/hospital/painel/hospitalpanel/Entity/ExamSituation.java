@@ -12,17 +12,17 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @Builder
-public class Position {
+@AllArgsConstructor
+public class ExamSituation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "position_seq")
-    private Long idPosition;
-    private String function;
-    private String status;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "exam_situation_seq")
+    private Long idExamSituation;
+    private String situation;
+    private Integer status;
 
-    public Position() {
+    public ExamSituation() {
 
     }
 }

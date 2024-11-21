@@ -17,6 +17,7 @@ public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
     private Long idUser;
 
     @Column(unique = true, nullable = false)
@@ -26,7 +27,7 @@ public class AppUser {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "id_employee")
+    @JoinColumn(name = "id_employee", nullable = false)
     private Employee employee;
 
     @Column(nullable = false)
