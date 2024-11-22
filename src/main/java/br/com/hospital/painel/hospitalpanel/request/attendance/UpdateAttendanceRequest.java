@@ -9,7 +9,6 @@ import lombok.Setter;
 @Builder
 public class UpdateAttendanceRequest {
 
-    private Long idAttendanceType;
     private Long idAttendanceSituation;
 
 }

@@ -2,7 +2,6 @@ package br.com.hospital.painel.hospitalpanel.service;
 
 import br.com.hospital.painel.hospitalpanel.Entity.*;
 import br.com.hospital.painel.hospitalpanel.repository.AttendanceRepository;
-import br.com.hospital.painel.hospitalpanel.request.attendance.UpdateAttendanceRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +13,12 @@ public class AttendanceService {
 
     private final AttendanceRepository attendanceRepository;
 
-    public Attendance registerAttendance(Long idPatient) {
+    public Attendance registerAttendance(Long idPatient, Long idEmployee) {
 
         Attendance attendance = Attendance
                 .builder()
                 .patient(Patient.builder().idPatient(idPatient).build())
+                .employee(Employee.builder().idEmployee(idEmployee).build())
                 .attendanceSituation(AttendanceSituation.builder().idAttendanceSituation(1L).build())
                 .build();
 
@@ -33,12 +33,12 @@ public class AttendanceService {
         return attendanceRepository.findByIdAttendance(idAttendance);
     }
 
-    public Attendance updateAttendance(Long idAttendance, Long idEmployee, UpdateAttendanceRequest request) {
+    public Attendance updateAttendance(Long idAttendance, Long idEmployee, Long idAttendanceSituation) {
 
         Attendance attendance = findAttendance(idAttendance);
 
         attendance.setEmployee(Employee.builder().idEmployee(idEmployee).build());
-        attendance.setAttendanceSituation(AttendanceSituation.builder().idAttendanceSituation(request.getIdAttendanceSituation()).build());
+        attendance.setAttendanceSituation(AttendanceSituation.builder().idAttendanceSituation(idAttendanceSituation).build());
 
         return attendanceRepository.save(attendance);
 

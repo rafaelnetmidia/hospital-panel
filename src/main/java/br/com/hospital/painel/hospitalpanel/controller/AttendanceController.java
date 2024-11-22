@@ -18,10 +18,10 @@ public class AttendanceController {
 
     private final AttendanceService attendanceService;
 
-    @PostMapping("/register/{idPatient}")
-    public ResponseEntity<String> registerAttendance(@PathVariable Long idPatient) {
+    @PostMapping("/register/patient/{idPatient}/employee/{idEmployee}")
+    public ResponseEntity<String> registerAttendance(@PathVariable Long idPatient, @PathVariable Long idEmployee) {
 
-        Attendance attendance = attendanceService.registerAttendance(idPatient);
+        Attendance attendance = attendanceService.registerAttendance(idPatient, idEmployee);
 
         if (attendance != null) {
             return ResponseEntity.created(URI.create("/attendances/" + attendance.getIdAttendance())).build();
@@ -57,7 +57,7 @@ public class AttendanceController {
 
     @PutMapping("attendance/{idAttendance}/employee/{idEmployee}")
     public ResponseEntity<URI> updateAttendance(@PathVariable Long idAttendance, @PathVariable Long idEmployee, @RequestBody UpdateAttendanceRequest request) {
-        Attendance attendance = attendanceService.updateAttendance(idAttendance, idEmployee, request);
+        Attendance attendance = attendanceService.updateAttendance(idAttendance, idEmployee, request.getIdAttendanceSituation());
 
         if (attendance == null) {
             return ResponseEntity.badRequest().build();
