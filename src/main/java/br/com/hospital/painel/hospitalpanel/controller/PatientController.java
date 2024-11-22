@@ -1,6 +1,7 @@
 package br.com.hospital.painel.hospitalpanel.controller;
 
 import br.com.hospital.painel.hospitalpanel.Entity.Patient;
+import br.com.hospital.painel.hospitalpanel.request.patient.PatientRequest;
 import br.com.hospital.painel.hospitalpanel.request.patient.RegisterPatientRequest;
 import br.com.hospital.painel.hospitalpanel.service.PatientService;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/patients")
@@ -29,10 +31,35 @@ public class PatientController {
 
     }
 
+    @GetMapping
+    public ResponseEntity<List<Patient>> findPatientAll() {
+
+        List<Patient> patient = patientService.findPatientAll();
+
+        if (patient.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(patient);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> findPatient(@PathVariable Long id) {
+    public ResponseEntity<Patient> findPatientToId(@PathVariable Long id) {
 
         Patient patient = patientService.findPatient(id);
+
+        if (patient == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(patient);
+    }
+
+
+    @PostMapping("/find-patient/document")
+    public ResponseEntity<Patient> findPatientToDocument(@RequestBody PatientRequest request) {
+
+       Patient patient = patientService.findPatientToDocument(request.getCpf());
 
         if(patient == null) {
             return ResponseEntity.noContent().build();

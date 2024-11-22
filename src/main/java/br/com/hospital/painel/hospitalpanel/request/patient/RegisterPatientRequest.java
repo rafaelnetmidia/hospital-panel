@@ -10,7 +10,11 @@ import lombok.Setter;
 public class RegisterPatientRequest {
 
     private String name;
-    private String birthDate;
+    private String cpf;
+    private String rg;
     private String telephone;
+    private String email;
+    private String birthDate;
+    private Boolean isActive;
 
 }

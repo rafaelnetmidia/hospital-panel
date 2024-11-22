@@ -28,6 +28,8 @@ public class Patient {
     private String telephone;
     @Column(unique = true)
     private String email;
+    @Column(nullable = false)
+    private Boolean isActive;
 
     public Patient() {
 

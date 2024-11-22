@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -24,10 +25,13 @@ public class PatientService {
 
         Patient patient = Patient.builder()
                 .name(request.getName())
+                .cpf(request.getCpf())
+                .rg(request.getRg())
                 .dtBirth(birthDate)
                 .telephone(request.getTelephone())
+                .email(request.getEmail())
+                .isActive(true)
                 .build();
-
         return patientRepository.save(patient);
 
     }
@@ -37,12 +41,22 @@ public class PatientService {
         return patientRepository.findById(id).orElse(null);
     }
 
+    @SneakyThrows
     public Patient updatePatient(Long id, RegisterPatientRequest request) {
+
         Patient patient = findPatient(id);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthDate = dateFormat.parse(request.getBirthDate());
 
         if(patient != null) {
             patient.setName(request.getName());
+            patient.setCpf(request.getCpf());
+            patient.setRg(request.getRg());
             patient.setTelephone(request.getTelephone());
+            patient.setEmail(request.getEmail());
+            patient.setDtBirth(birthDate);
+            patient.setIsActive(request.getIsActive());
             return patientRepository.save(patient);
         }
 
@@ -51,5 +65,13 @@ public class PatientService {
 
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
+    }
+
+    public Patient findPatientToDocument(String cpf) {
+        return patientRepository.findByCpf(cpf);
+    }
+
+    public List<Patient> findPatientAll() {
+        return patientRepository.findAll();
     }
 }
