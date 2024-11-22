@@ -1,54 +1,21 @@
 package br.com.hospital.painel.hospitalpanel.service;
 
-import br.com.hospital.painel.hospitalpanel.Entity.AppUser;
 import br.com.hospital.painel.hospitalpanel.Entity.Employee;
-import br.com.hospital.painel.hospitalpanel.Entity.Role;
 import br.com.hospital.painel.hospitalpanel.repository.EmployeeRepository;
-import br.com.hospital.painel.hospitalpanel.request.employee.RegisterEmployeeAndUserRequest;
+import br.com.hospital.painel.hospitalpanel.request.employee.RegisterEmployeeRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final UserDetailsServiceImpl userDetailsService;
-    private final PasswordEncoder passwordEncoder;
-    private final RoleService roleService;
 
-    @Transactional
-    public Employee registerEmployeeAndUser(RegisterEmployeeAndUserRequest request) {
+    public Employee registerEmployee(RegisterEmployeeRequest request) {
 
-        Employee employeeSaved = getSaveEmployee(request);
-
-        if(request.getUserName() != null && request.getPassword() != null && request.getRoles() != null && !request.getRoles().isEmpty()){
-            getSaveUser(request, employeeSaved);
-        }
-
-        return employeeSaved;
-    }
-
-    private AppUser getSaveUser(RegisterEmployeeAndUserRequest request, Employee employeeSaved) {
-        Set<Role> roles = roleService.rolesList(request.getRoles());
-
-        AppUser appUser = AppUser.builder()
-                .username(request.getUserName())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .employee(employeeSaved)
-                .roles(roles)
-                .isActive(true)
-                .build();
-
-        return userDetailsService.createUser(appUser);
-    }
-
-    private Employee getSaveEmployee(RegisterEmployeeAndUserRequest request) {
         Employee employee = Employee.builder()
                 .name(request.getName())
                 .telephone(request.getTelephone())
@@ -61,14 +28,28 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Long id, RegisterEmployeeAndUserRequest request) {
-        return null;
+    public Employee updateEmployee(Long id, RegisterEmployeeRequest request) {
+
+        Employee employee = findIdEmployee(id);
+
+        employee.setName(request.getName());
+        employee.setTelephone(request.getTelephone());
+        employee.setRg(request.getRg());
+        employee.setCpf(request.getCpf());
+        employee.setEmail(request.getEmail());
+
+        return employeeRepository.save(employee);
     }
 
     public void deleteEmployee(Long id) {
+        employeeRepository.deleteById(id);
     }
 
     public List<Employee> findAllEmployee() {
-        return null;
+        return employeeRepository.findAll();
+    }
+
+    public Employee findIdEmployee(Long id) {
+        return employeeRepository.findById(id).orElse(null);
     }
 }

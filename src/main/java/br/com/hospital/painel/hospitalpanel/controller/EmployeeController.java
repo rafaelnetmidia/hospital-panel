@@ -1,7 +1,7 @@
 package br.com.hospital.painel.hospitalpanel.controller;
 
 import br.com.hospital.painel.hospitalpanel.Entity.Employee;
-import br.com.hospital.painel.hospitalpanel.request.employee.RegisterEmployeeAndUserRequest;
+import br.com.hospital.painel.hospitalpanel.request.employee.RegisterEmployeeRequest;
 import br.com.hospital.painel.hospitalpanel.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,9 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerEmployeeAndUser(@RequestBody RegisterEmployeeAndUserRequest request) {
+    public ResponseEntity<String> registerEmployee(@RequestBody RegisterEmployeeRequest request) {
 
-        Employee employee = employeeService.registerEmployeeAndUser(request);
+        Employee employee = employeeService.registerEmployee(request);
 
         if(employee != null) {
             return ResponseEntity.created(URI.create("/employees/" + employee.getIdEmployee())).build();
@@ -43,8 +43,20 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> findIdEmployee(@PathVariable Long id) {
+
+        Employee employee = employeeService.findIdEmployee(id);
+
+        if (employee == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(employee);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<URI> updateEmployee(@PathVariable Long id, @RequestBody RegisterEmployeeAndUserRequest request) {
+    public ResponseEntity<URI> updateEmployee(@PathVariable Long id, @RequestBody RegisterEmployeeRequest request) {
 
         Employee employee = employeeService.updateEmployee(id, request);
 
