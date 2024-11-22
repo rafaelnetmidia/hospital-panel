@@ -22,7 +22,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    @PostMapping("/login")
+    @PostMapping("/token")
     public ResponseEntity<?> authenticate(@RequestBody LoginRequestDTO request) {
 
         String username = request.getUsername();
@@ -38,4 +38,5 @@ public class AuthController {
 
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
+
 }

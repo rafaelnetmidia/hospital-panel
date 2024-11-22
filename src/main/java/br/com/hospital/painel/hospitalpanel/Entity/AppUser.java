@@ -1,5 +1,6 @@
 package br.com.hospital.painel.hospitalpanel.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,19 +27,20 @@ public class AppUser {
     @Column(nullable = false)
     private String password;
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_employee", nullable = false)
     private Employee employee;
 
     @Column(nullable = false)
     private Boolean isActive;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_role")
     )
+    @JsonManagedReference // Indica o lado "gerenciado" da relação
     private Set<Role> roles;
 
     public AppUser() {}

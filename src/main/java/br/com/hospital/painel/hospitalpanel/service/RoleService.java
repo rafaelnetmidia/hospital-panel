@@ -16,15 +16,15 @@ public class RoleService {
 
     private final RoleRepository roleRepository;
 
-    public Optional<Role> findById(Long id) {
-        return roleRepository.findById(id.intValue());
+    public Optional<Role> findById(Integer id) {
+        return roleRepository.findById(id);
     }
 
-    public Set<Role> rolesList(List<Long> roles) {
+    public Set<Role> rolesList(List<Integer> roles) {
 
         Set<Role> rolesList = new HashSet<>();
 
-        for (Long roleId : roles) {
+        for (Integer roleId : roles) {
             Optional<Role> role = findById(roleId);
             rolesList.add(role.orElseThrow(() -> new RuntimeException("Role not found")));
         }

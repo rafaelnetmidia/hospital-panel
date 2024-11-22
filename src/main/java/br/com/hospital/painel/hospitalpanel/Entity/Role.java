@@ -1,4 +1,5 @@
 package br.com.hospital.painel.hospitalpanel.Entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,13 +17,14 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
-    private Long idRole;
+    private Integer idRole;
 
     @Column(unique = true, nullable = false)
     private String name;
 
     // Relacionamento muitos-para-muitos com a entidade AppUser
     @ManyToMany(mappedBy = "roles")
+    @JsonBackReference // Indica o lado "traseiro" da relação
     private Set<AppUser> users;
 
     public Role() {}

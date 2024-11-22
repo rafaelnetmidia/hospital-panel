@@ -37,4 +37,9 @@ public class Employee {
     public Employee() {
 
     }
+
+
+    public Employee(Long idEmployee) {
+        this.idEmployee = idEmployee;
+    }
 }
