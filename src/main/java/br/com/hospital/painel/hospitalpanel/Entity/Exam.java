@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,6 +26,9 @@ public class Exam {
     @Column
     private String result;
 
+    @CreationTimestamp
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime dtCreate;
 
     @ManyToOne
     @JoinColumn(name = "id_attendance", nullable = false)

@@ -9,6 +9,11 @@ INSERT INTO exam_type (id_exam_type, type, status) VALUES (1, 'clinica médica',
 INSERT INTO exam_type (id_exam_type, type, status) VALUES (2, 'radiologia', 1);
 INSERT INTO exam_type (id_exam_type, type, status) VALUES (3, 'laboratorio', 1);
 
+INSERT INTO exam_situation (id_exam_situation, situation, status) VALUES (1, 'Aguardando atendimento', 1);
+INSERT INTO exam_situation (id_exam_situation, situation, status) VALUES (2, 'Iniciado', 1);
+INSERT INTO exam_situation (id_exam_situation, situation, status) VALUES (3, 'em analise', 1);
+INSERT INTO exam_situation (id_exam_situation, situation, status) VALUES (4, 'concluido', 1);
+
 INSERT INTO attendance_situation (id_attendance_situation, situation, status) VALUES (1, 'Iniciado', 1);
 INSERT INTO attendance_situation (id_attendance_situation, situation, status) VALUES (2, 'encaminhado', 1);
 INSERT INTO attendance_situation (id_attendance_situation, situation, status) VALUES (3, 'em analise', 1);
